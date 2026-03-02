@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCESS GRANTED: RECIPE_V1.8</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .terminal {
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid #33ff33;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
+        }
+        .header { border-bottom: 1px solid #33ff33; margin-bottom: 20px; padding-bottom: 10px; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        h1 { font-size: 1.2rem; margin: 0; }
+        .recipe-content { display: none; } /* Versteckt bis zum "Laden" */
+        .loading-bar { color: #33ff33; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<div class="terminal">
+    <div class="header">
+        <h1>> SYSTEM STATUS: ENCRYPTED_DATA_FOUND</h1>
+        <p>> AUTHENTICATING USER: COUSINE_V18... <span class="blink">_</span></p>
+    </div>
+
+    <div id="boot-sequence">
+        <p>> Initializing decryption... [OK]</p>
+        <p>> Bypassing birthday firewall... [DONE]</p>
+        <p id="loading-text">> Loading Ingredients...</p>
+    </div>
+
+    <div id="recipe" class="recipe-content">
+        <h2 style="color: #fff; text-transform: uppercase;">Das Geheimrezept: [HIER REZEPTNAME]</h2>
+        <hr style="border: 0; border-top: 1px dashed #33ff33;">
+        <h3>ZUTATEN:</h3>
+        <ul>
+            <li>Zutat 1 (Menge)</li>
+            <li>Zutat 2 (Menge)</li>
+            <li>Eine Prise technisches Know-how</li>
+        </ul>
+        <h3>ZUBEREITUNG:</h3>
+        <p>1. Erstmal den Ofen auf 180°C "booten".</p>
+        <p>2. Die Zutaten in einer Schüssel zusammenführen (Merge-Conflict vermeiden!).</p>
+        <p>3. Backen, bis der Status "GOLDEN_BROWN" erreicht ist.</p>
+        <br>
+        <p style="color: #fff;"><strong>Persönliche Nachricht:</strong> Alles Gute zum 18. Geburtstag! Jetzt bist du alt genug, um Root-Rechte für dein Leben zu übernehmen. Viel Spaß beim Kochen!</p>
+    </div>
+</div>
+
+<script>
+    // Kleiner Effekt: Erst nach 3 Sekunden wird das Rezept "entschlüsselt"
+    setTimeout(() => {
+        document.getElementById('boot-sequence').style.display = 'none';
+        document.getElementById('recipe').style.display = 'block';
+    }, 3500);
+</script>
+
+</body>
+</html>
