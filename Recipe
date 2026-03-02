@@ -3,72 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCESS GRANTED: RECIPE_V1.8</title>
+    <title>BOLO_OS v1.8 - Emergency Comfort Food</title>
     <style>
         body {
-            background-color: #0a0a0a;
-            color: #33ff33;
+            background-color: #050505;
+            color: #00ff41;
             font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             padding: 20px;
-            margin: 0;
-            line-height: 1.6;
+            line-height: 1.4;
         }
         .terminal {
-            max-width: 600px;
-            width: 100%;
-            border: 1px solid #33ff33;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(51, 255, 51, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid #00ff41;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
         }
-        .header { border-bottom: 1px solid #33ff33; margin-bottom: 20px; padding-bottom: 10px; }
+        h1, h2 { color: #fff; text-transform: uppercase; border-bottom: 1px solid #00ff41; padding-bottom: 10px; }
+        .system-msg { color: #888; font-style: italic; }
+        .highlight { color: #ff00ff; font-weight: bold; }
+        
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
-        h1 { font-size: 1.2rem; margin: 0; }
-        .recipe-content { display: none; } /* Versteckt bis zum "Laden" */
-        .loading-bar { color: #33ff33; margin: 10px 0; }
+
+        #setup, #cooking-protocol, #boot-button { display: none; }
+
+        .ingredient-list { list-style: none; padding: 0; }
+        .ingredient-list li { margin: 10px 0; }
+        input[type="checkbox"] { accent-color: #00ff41; margin-right: 10px; cursor: pointer; }
+        
+        button {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 15px 20px;
+            font-family: 'Courier New', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+
+        .step { margin-bottom: 15px; }
+        .warning { color: #ff3333; font-weight: bold; }
+        .override-msg { color: #ffae00; border: 1px solid #ffae00; padding: 10px; margin-bottom: 20px; animation: blinker 2s linear infinite; }
     </style>
 </head>
 <body>
 
 <div class="terminal">
-    <div class="header">
-        <h1>> SYSTEM STATUS: ENCRYPTED_DATA_FOUND</h1>
-        <p>> AUTHENTICATING USER: COUSINE_V18... <span class="blink">_</span></p>
-    </div>
-
     <div id="boot-sequence">
-        <p>> Initializing decryption... [OK]</p>
-        <p>> Bypassing birthday firewall... [DONE]</p>
-        <p id="loading-text">> Loading Ingredients...</p>
+        <p>> BOLO_OS [Version 1.8.2026]</p>
+        <p>> BIOS Date: 02/03/2026</p>
+        <p>> CPU: Student_Hunger_Processor_9000</p>
+        <br>
+        <p>> Initializing file system... [OK]</p>
+        <p>> Loading recipe_database... [OK]</p>
+        <p>> Scanning for allergies... [NONE FOUND]</p>
+        <p>> Removing Celery_Malware... [DELETED]</p>
+        <p>> Status: Ready to boot. <span class="blink">_</span></p>
+        
+        <button id="boot-button" onclick="startSystem()">[ ENTER SYSTEM ]</button>
     </div>
 
-    <div id="recipe" class="recipe-content">
-        <h2 style="color: #fff; text-transform: uppercase;">Das Geheimrezept: [HIER REZEPTNAME]</h2>
-        <hr style="border: 0; border-top: 1px dashed #33ff33;">
-        <h3>ZUTATEN:</h3>
-        <ul>
-            <li>Zutat 1 (Menge)</li>
-            <li>Zutat 2 (Menge)</li>
-            <li>Eine Prise technisches Know-how</li>
+    <div id="setup">
+        <h1>> PROJECT: BOLOGNESE_DIDI_EDITION</h1>
+        <p class="system-msg">Status: Waiting for hardware verification (Ingredients)...</p>
+        <h2>[REQUIRED_COMPONENTS]</h2>
+        <ul class="ingredient-list">
+            <li><input type="checkbox" class="check"> 500g Hackfleisch</li>
+            <li><input type="checkbox" class="check"> Speckwürfel</li>
+            <li><input type="checkbox" class="check"> VIEL Tomatenmark</li>
+            <li><input type="checkbox" class="check"> Möhren & Zwiebeln</li>
+            <li><input type="checkbox" class="check"> Knoblauch</li>
+            <li><input type="checkbox" class="check"> Passierte Tomaten & Gemüsebrühe</li>
+            <li><input type="checkbox" class="check"> Rotwein (oder Balsamico)</li>
+            <li><input type="checkbox" class="check"> <span class="highlight">Dunkle Schokolade</span> (Secret Patch)</li>
+            <li><input type="checkbox" class="check"> Spagetti</li>
         </ul>
-        <h3>ZUBEREITUNG:</h3>
-        <p>1. Erstmal den Ofen auf 180°C "booten".</p>
-        <p>2. Die Zutaten in einer Schüssel zusammenführen (Merge-Conflict vermeiden!).</p>
-        <p>3. Backen, bis der Status "GOLDEN_BROWN" erreicht ist.</p>
+        <p class="warning">> HINWEIS: Sellerie-Modul wurde aufgrund von Inkompatibilität gelöscht.</p>
+        <button onclick="verifySystem()">INITIALIZE COOKING_PROTOCOL.EXE</button>
+    </div>
+
+    <div id="cooking-protocol">
+        <div id="override-warning" style="display:none;" class="override-msg">
+            ! ATTENTION: MANUAL OVERRIDE ACTIVE !<br>
+            Running with missing components.
+        </div>
+        <h2>[EXECUTION_STEPS]</h2>
+        <div class="step">> STEP_01: Speck scharf anbraten, bis das Fett austritt. Hack hinzufügen und mitbraten.</div>
+        <div class="step">> STEP_02: Fleisch-Einheit aus dem Topf nehmen (Temporärer Cache).</div>
+        <div class="step">> STEP_03: Zwiebeln & Knobi glasig dünsten. Möhren dazu, bis sie weich werden.</div>
+        <div class="step">> STEP_04: Fleisch zurück in den Mainframe. Flüssigkeit reduzieren.</div>
+        <div class="step">> STEP_05: Tomatenmark hinzufügen. <span class="warning">ACHTUNG:</span> Leicht ansetzen lassen für maximale Röstaromen!</div>
+        <div class="step">> STEP_06: Mit Wein/Balsamico ablöschen. Passierte Tomaten & Brühe einspielen.</div>
+        <div class="step">> STEP_07: Slow-Cooking Modus aktivieren. Je länger, desto besser. Bei Bedarf Brühe nachladen.</div>
+        <div class="step">> STEP_08: Schokolade einrühren für den finalen Glanz.</div>
         <br>
-        <p style="color: #fff;"><strong>Persönliche Nachricht:</strong> Alles Gute zum 18. Geburtstag! Jetzt bist du alt genug, um Root-Rechte für dein Leben zu übernehmen. Viel Spaß beim Kochen!</p>
+        <p style="color: #fff; border: 1px solid #fff; padding: 10px;">
+            <strong>LOG_ENTRY:</strong> Alles Gute zum 18., Didi! Hier ist dein Basis-Script für gute Laune. Ein echter Schmackofatz! 🍝
+        </p>
     </div>
 </div>
 
 <script>
-    // Kleiner Effekt: Erst nach 3 Sekunden wird das Rezept "entschlüsselt"
-    setTimeout(() => {
+    // Zeige den Boot-Button nach einer kurzen Verzögerung
+    window.onload = function() {
+        setTimeout(() => {
+            document.getElementById('boot-button').style.display = 'block';
+        }, 1500); 
+    };
+
+    function startSystem() {
         document.getElementById('boot-sequence').style.display = 'none';
-        document.getElementById('recipe').style.display = 'block';
-    }, 3500);
+        document.getElementById('setup').style.display = 'block';
+    }
+
+    function verifySystem() {
+        const checkboxes = document.querySelectorAll('.check');
+        const allChecked = Array.from(checkboxes).every(c => c.checked);
+        
+        if (allChecked) {
+            showRecipe(false);
+        } else {
+            if (confirm("CRITICAL WARNING: Missing ingredients!\n\nManual Override einleiten?")) {
+                showRecipe(true);
+            }
+        }
+    }
+
+    function showRecipe(isOverride) {
+        document.getElementById('setup').style.display = 'none';
+        document.getElementById('cooking-protocol').style.display = 'block';
+        if (isOverride) {
+            document.getElementById('override-warning').style.display = 'block';
+        }
+        window.scrollTo(0, 0);
+    }
 </script>
 
 </body>
